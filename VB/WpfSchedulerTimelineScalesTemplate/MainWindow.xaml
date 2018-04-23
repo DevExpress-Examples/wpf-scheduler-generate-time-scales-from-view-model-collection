@@ -1,0 +1,65 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfSchedulerTimelineScalesTemplate"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling" x:Class="WpfSchedulerTimelineScalesTemplate.MainWindow"
+        mc:Ignorable="d"
+        Title="Timeline View" Height="480" Width="640"
+        DataContext="{dxmvvm:ViewModelSource local:MainViewModel}">
+    <Window.Resources>
+        <local:TimeScaleTemplateSelector x:Key="TimeScaleTemplateSelector">
+            <local:TimeScaleTemplateSelector.WorkDayScaleTemplate>
+                <DataTemplate>
+                    <ContentControl>
+                        <dxsch:TimeScaleWorkDay Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}"/>
+                    </ContentControl>
+                </DataTemplate>
+            </local:TimeScaleTemplateSelector.WorkDayScaleTemplate>
+            <local:TimeScaleTemplateSelector.WorkHourScaleTemplate>
+                <DataTemplate>
+                    <ContentControl>
+                        <dxsch:TimeScaleWorkHour Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}"/>
+                    </ContentControl>
+                </DataTemplate>
+            </local:TimeScaleTemplateSelector.WorkHourScaleTemplate>
+            <local:TimeScaleTemplateSelector.FixedTimeScaleTemplate>
+                <DataTemplate>
+                    <ContentControl>
+                        <dxsch:FixedTimeScale Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}" Scale="{Binding Scale}"/>
+                    </ContentControl>
+                </DataTemplate>
+            </local:TimeScaleTemplateSelector.FixedTimeScaleTemplate>
+        </local:TimeScaleTemplateSelector>
+    </Window.Resources>
+    <Grid>
+        <dxsch:SchedulerControl x:Name="scheduler" GroupType="None" Start="{Binding Start, Mode=TwoWay}" AllowAppointmentConflicts="True">
+            <dxsch:TimelineView x:Name="timelineView" IntervalCount="8" TimeScalesSource="{Binding TimeScales}" TimeScaleTemplateSelector="{StaticResource TimeScaleTemplateSelector}"/>
+            <dxsch:SchedulerControl.DataSource>
+                <dxsch:DataSource AppointmentsSource="{Binding Appointments}" ResourcesSource="{Binding Calendars}">
+                    <dxsch:DataSource.AppointmentMappings>
+                        <dxsch:AppointmentMappings
+                            Id="Id"
+                            AllDay="AllDay"
+                            Type="AppointmentType"
+                            Start="Start" 
+                            End="End" 
+                            Subject="Subject" 
+                            Description="Description"
+                            Location="Location"
+                            ResourceId="CalendarId"
+                            RecurrenceInfo="RecurrenceInfo"
+                            StatusId="Status"
+                            LabelId="Label"/>
+                    </dxsch:DataSource.AppointmentMappings>
+                    <dxsch:DataSource.ResourceMappings>
+                        <dxsch:ResourceMappings Id="Id" Caption="Name"/>
+                    </dxsch:DataSource.ResourceMappings>
+                </dxsch:DataSource>
+            </dxsch:SchedulerControl.DataSource>
+        </dxsch:SchedulerControl>
+    </Grid>
+</Window>
