@@ -1,3 +1,10 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MainViewModel.cs](./CS/WpfSchedulerTimelineScalesTemplate/MainViewModel.cs) (VB: [MainViewModel.vb](./VB/WpfSchedulerTimelineScalesTemplate/MainViewModel.vb))
+* **[MainWindow.xaml](./CS/WpfSchedulerTimelineScalesTemplate/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/WpfSchedulerTimelineScalesTemplate/MainWindow.xaml))**
+* [TimeScaleTemplateSelector.cs](./CS/WpfSchedulerTimelineScalesTemplate/TimeScaleTemplateSelector.cs) (VB: [TimeScaleTemplateSelector.vb](./VB/WpfSchedulerTimelineScalesTemplate/TimeScaleTemplateSelector.vb))
+<!-- default file list end -->
 # How to customize time scales in the Timeline view
 
 
