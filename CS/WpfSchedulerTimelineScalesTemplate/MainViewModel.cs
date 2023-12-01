@@ -1,16 +1,16 @@
-﻿using DevExpress.Mvvm.POCO;
+﻿using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace WpfSchedulerTimelineScalesTemplate {
-    public class MainViewModel {
-        public virtual DateTime Start { get; set; }
-        public virtual IEnumerable<TeamCalendar> Calendars { get; protected set; }
-        public virtual IEnumerable<TeamAppointment> Appointments { get; protected set; }
-        public virtual ObservableCollection<TimeScaleViewModel> TimeScales { get; protected set; }
+    public class MainViewModel : ViewModelBase {
+        public DateTime Start { get; set; }
+        public IEnumerable<TeamCalendar> Calendars { get; protected set; }
+        public IEnumerable<TeamAppointment> Appointments { get; protected set; }
+        public ObservableCollection<TimeScaleViewModel> TimeScales { get; protected set; }
 
-        protected MainViewModel() {
+        public MainViewModel() {
             Start = TeamData.Start;
             Calendars = new ObservableCollection<TeamCalendar>(TeamData.Calendars);
             Appointments = new ObservableCollection<TeamAppointment>(TeamData.AllAppointments);
@@ -19,13 +19,13 @@ namespace WpfSchedulerTimelineScalesTemplate {
 
         private void CreateTimeScales() {
             TimeScales = new ObservableCollection<TimeScaleViewModel>();
-            AddTimeScale("Work Day", true, ScaleType.WorkDay);
-            AddTimeScale("Work Hour", true, ScaleType.WorkHour);
+            AddTimeScale("Day", true, ScaleType.Day);
+            AddTimeScale("Hour", true, ScaleType.Hour);
             AddFixedTimeScale("Half Hour", false, new TimeSpan(0, 30, 0));
         }
 
         private void AddTimeScale(string caption, bool showHeaders, ScaleType type) {
-            TimeScaleViewModel timeScale = TimeScaleViewModel.Create();
+            TimeScaleViewModel timeScale = new TimeScaleViewModel();
             timeScale.Caption = caption;
             timeScale.ShowHeaders = showHeaders;
             timeScale.Type = type;
@@ -34,7 +34,7 @@ namespace WpfSchedulerTimelineScalesTemplate {
         }
 
         private void AddFixedTimeScale(string caption, bool showHeaders, TimeSpan scale) {
-            TimeScaleViewModel timeScale = TimeScaleViewModel.Create();
+            TimeScaleViewModel timeScale = new TimeScaleViewModel();
             timeScale.Caption = caption;
             timeScale.Scale = scale;
             timeScale.ShowHeaders = showHeaders;
@@ -44,17 +44,13 @@ namespace WpfSchedulerTimelineScalesTemplate {
         }
     }
 
-    public enum ScaleType { WorkDay, WorkHour, FixedTime }
+    public enum ScaleType { Day, Hour, FixedTime }
 
-    public class TimeScaleViewModel {
-        public static TimeScaleViewModel Create() {
-            return ViewModelSource.Create(() => new TimeScaleViewModel());
-        }
-        protected TimeScaleViewModel() { }
-        public virtual string Caption { get; set; }
-        public virtual bool ShowHeaders { get; set; }
-        public virtual bool IsEnabled { get; set; }
-        public virtual TimeSpan Scale { get; set; }
+    public class TimeScaleViewModel : BindableBase {
+        public string Caption { get; set; }
+        public bool ShowHeaders { get; set; }
+        public bool IsEnabled { get; set; }
+        public TimeSpan Scale { get; set; }
         public ScaleType Type { get; set; }
     }
 }

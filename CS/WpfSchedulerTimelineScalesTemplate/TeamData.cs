@@ -4,15 +4,12 @@ using System.Linq;
 using DevExpress.Mvvm;
 using DevExpress.XtraScheduler;
 
-namespace WpfSchedulerTimelineScalesTemplate
-{
-    public class TeamCalendar
-    {
+namespace WpfSchedulerTimelineScalesTemplate {
+    public class TeamCalendar {
         public int Id { get; set; }
         public string Name { get; set; }
     }
-    public class TeamAppointment
-    {
+    public class TeamAppointment {
         public int Id { get; set; }
         public int AppointmentType { get; set; }
         public bool AllDay { get; set; }
@@ -30,22 +27,18 @@ namespace WpfSchedulerTimelineScalesTemplate
         public string ReminderInfo { get; set; }
     }
 
-    public class Employee
-    {
+    public class Employee {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
     }
 
-    public static class TeamData
-    {
-        static TeamData()
-        {
+    public static class TeamData {
+        static TeamData() {
             Random = new Random();
             Start = GetStart();
 
-            if (ViewModelBase.IsInDesignMode)
-            {
+            if (ViewModelBase.IsInDesignMode) {
                 Employees = new List<Employee>();
                 Calendars = CreateCalendars().ToList();
                 VacationAppointments = new TeamAppointment[] { };
@@ -124,8 +117,7 @@ namespace WpfSchedulerTimelineScalesTemplate
         static readonly List<Employee> Employees;
         static readonly Random Random;
 
-        static DateTime GetStart()
-        {
+        static DateTime GetStart() {
             DateTime today = DateTime.Today;
             DayOfWeek dayOfWeek = today.DayOfWeek;
             if (dayOfWeek == DayOfWeek.Monday)
@@ -134,29 +126,24 @@ namespace WpfSchedulerTimelineScalesTemplate
                 return today.AddDays(1);
             return today.AddDays(-((int)dayOfWeek - 1));
         }
-        static Employee GetRandomEmployee()
-        {
+        static Employee GetRandomEmployee() {
             return Employees[Random.Next(0, Employees.Count)];
         }
 
-        static IEnumerable<TeamCalendar> CreateCalendars()
-        {
+        static IEnumerable<TeamCalendar> CreateCalendars() {
             return new TeamCalendar[] {
                 new TeamCalendar() { Id = 0, Name = "My Calendar" },
                 new TeamCalendar() { Id = 1, Name = "Team Calendar" },
             };
         }
 
-        static IEnumerable<TeamAppointment> CreateBirthdayAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateBirthdayAppts(DateTime start) {
             return Employees.Select(CreateBirthdayAppt);
         }
-        static TeamAppointment CreateBirthdayAppt(Employee employee)
-        {
+        static TeamAppointment CreateBirthdayAppt(Employee employee) {
             if (employee.BirthDate == null) return null;
             DateTime date = employee.BirthDate.Value;
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Pattern,
                 AllDay = true,
                 Start = date,
@@ -166,8 +153,7 @@ namespace WpfSchedulerTimelineScalesTemplate
                 Label = 8,
                 CalendarId = 0,
             };
-            appt.RecurrenceInfo = new RecurrenceInfo()
-            {
+            appt.RecurrenceInfo = new RecurrenceInfo() {
                 AllDay = true,
                 Start = date,
                 Month = date.Month,
@@ -179,8 +165,7 @@ namespace WpfSchedulerTimelineScalesTemplate
             return appt;
         }
 
-        static IEnumerable<TeamAppointment> CreateConferenceAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateConferenceAppts(DateTime start) {
             DateTime newStart = start;
             Tuple<string, DateTime>[] thisWeekList = new[] {
                 Tuple.Create("DevExpress MVVM Framework", newStart.AddDays(1).AddHours(15)),
@@ -216,8 +201,7 @@ namespace WpfSchedulerTimelineScalesTemplate
             List<Tuple<string, DateTime>> commonList = new List<Tuple<string, DateTime>>();
             DateTimeRange interval = new DateTimeRange(start.AddDays(-7), start.AddDays(21));
             IEnumerable<string> subjects = list.Select(x => x.Item1);
-            for (int i = 0; i < 100; i++)
-            {
+            for (int i = 0; i < 100; i++) {
                 newStart = start.AddYears(-1);
                 newStart = newStart.AddDays(Random.Next(2 * 365));
                 newStart = newStart.AddHours(Random.Next(9, 18));
@@ -229,11 +213,9 @@ namespace WpfSchedulerTimelineScalesTemplate
             return list.Concat(commonList).Select(x => CreateConferenceAppt(x.Item1, x.Item2));
 
         }
-        static TeamAppointment CreateConferenceAppt(string subject, DateTime start)
-        {
+        static TeamAppointment CreateConferenceAppt(string subject, DateTime start) {
             Employee emp = GetRandomEmployee();
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Normal,
                 AllDay = false,
                 Start = start,
@@ -248,8 +230,7 @@ namespace WpfSchedulerTimelineScalesTemplate
             return appt;
         }
 
-        static IEnumerable<TeamAppointment> CreateMeetingAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateMeetingAppts(DateTime start) {
             List<TeamAppointment> res = new List<TeamAppointment>() {
                 CreateMeetingRecurrenceAppt("Weekly meeting", start.AddMonths(-6).Add(new TimeSpan(5, 14, 00, 0))),
                 CreateLunchAppt(Employees[0], start.AddDays(1).AddHours(13)),
@@ -260,8 +241,7 @@ namespace WpfSchedulerTimelineScalesTemplate
             };
             DateTimeRange interval = new DateTimeRange(start.AddDays(-7), start.AddDays(21));
             List<int> days = new List<int>();
-            for (int i = 0; i < 50; i++)
-            {
+            for (int i = 0; i < 50; i++) {
                 Employee emp = Employees[Random.Next(0, Employees.Count)];
                 DateTime newStart = start.AddYears(-1);
                 newStart = newStart.AddDays(Random.Next(365));
@@ -276,10 +256,8 @@ namespace WpfSchedulerTimelineScalesTemplate
             }
             return res;
         }
-        static TeamAppointment CreateMeetingRecurrenceAppt(string subject, DateTime start)
-        {
-            var appt = new TeamAppointment()
-            {
+        static TeamAppointment CreateMeetingRecurrenceAppt(string subject, DateTime start) {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Pattern,
                 AllDay = false,
                 Start = start,
@@ -289,8 +267,7 @@ namespace WpfSchedulerTimelineScalesTemplate
                 Label = 2,
                 CalendarId = 1,
             };
-            appt.RecurrenceInfo = new RecurrenceInfo()
-            {
+            appt.RecurrenceInfo = new RecurrenceInfo() {
                 Start = start,
                 Type = RecurrenceType.Weekly,
                 WeekDays = WeekDays.Friday,
@@ -299,10 +276,8 @@ namespace WpfSchedulerTimelineScalesTemplate
             }.ToXml();
             return appt;
         }
-        static TeamAppointment CreateLunchAppt(Employee emp, DateTime start)
-        {
-            var appt = new TeamAppointment()
-            {
+        static TeamAppointment CreateLunchAppt(Employee emp, DateTime start) {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Normal,
                 AllDay = false,
                 Start = start,
@@ -315,8 +290,7 @@ namespace WpfSchedulerTimelineScalesTemplate
             return appt;
         }
 
-        static IEnumerable<TeamAppointment> CreatePhoneCallsAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreatePhoneCallsAppts(DateTime start) {
             List<TeamAppointment> res = new List<TeamAppointment>() {
                 CreatePhoneCallAppt(Employees[0], start.AddDays(0).AddHours(10)),
                 CreatePhoneCallAppt(Employees[1], start.AddDays(3).AddHours(11)),
@@ -334,8 +308,7 @@ namespace WpfSchedulerTimelineScalesTemplate
                 CreatePhoneCallAppt(GetRandomEmployee(), start.AddDays(6).AddHours(16.8)),
             };
             DateTimeRange interval = new DateTimeRange(start.AddDays(-7), start.AddDays(21));
-            for (int i = 0; i < 50; i++)
-            {
+            for (int i = 0; i < 50; i++) {
                 Employee emp = Employees[Random.Next(0, Employees.Count)];
                 DateTime newStart = start.AddYears(-1);
                 newStart = newStart.AddDays(Random.Next(365));
@@ -347,14 +320,12 @@ namespace WpfSchedulerTimelineScalesTemplate
             }
             return res;
         }
-        static TeamAppointment CreatePhoneCallAppt(Employee emp, DateTime start, TimeSpan? duration = null)
-        {
+        static TeamAppointment CreatePhoneCallAppt(Employee emp, DateTime start, TimeSpan? duration = null) {
             DateTime newStart = start.AddMinutes(Random.Next(0, 4) * 15);
             DateTime newEnd = duration != null
                 ? newStart.Add(duration.Value)
                 : newStart.AddMinutes(Random.Next(1, 6) * 5);
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Normal,
                 AllDay = false,
                 Start = newStart,
@@ -367,8 +338,7 @@ namespace WpfSchedulerTimelineScalesTemplate
             return appt;
         }
 
-        static IEnumerable<TeamAppointment> CreateVacationsAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateVacationsAppts(DateTime start) {
             return new[] {
                 new TeamAppointment() {
                     AppointmentType = (int)AppointmentType.Normal,
@@ -403,14 +373,12 @@ namespace WpfSchedulerTimelineScalesTemplate
             };
         }
 
-        static IEnumerable<TeamAppointment> CreateCarWashAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateCarWashAppts(DateTime start) {
             List<TeamAppointment> res = new List<TeamAppointment>() {
                 CreateCarWashAppt(start.AddDays(1).AddHours(17)),
             };
             DateTime newStart = start.AddYears(-1);
-            while (newStart < start.AddMonths(1))
-            {
+            while (newStart < start.AddMonths(1)) {
                 newStart = newStart.AddDays(Random.Next(18, 35));
                 if (VacationAppointments.Any(x => x.Start <= newStart && x.End >= newStart))
                     continue;
@@ -420,10 +388,8 @@ namespace WpfSchedulerTimelineScalesTemplate
             }
             return res;
         }
-        static TeamAppointment CreateCarWashAppt(DateTime start)
-        {
-            var appt = new TeamAppointment()
-            {
+        static TeamAppointment CreateCarWashAppt(DateTime start) {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Normal,
                 AllDay = false,
                 Start = start,
@@ -436,12 +402,10 @@ namespace WpfSchedulerTimelineScalesTemplate
             return appt;
         }
 
-        static IEnumerable<TeamAppointment> CreateCompanyBirthdayAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateCompanyBirthdayAppts(DateTime start) {
             DateTime newStart = new DateTime(start.Year - 1, start.Month, start.Day);
             newStart = newStart.AddDays(5);
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Pattern,
                 AllDay = true,
                 Start = newStart,
@@ -451,8 +415,7 @@ namespace WpfSchedulerTimelineScalesTemplate
                 Label = 8,
                 CalendarId = 1,
             };
-            appt.RecurrenceInfo = new RecurrenceInfo()
-            {
+            appt.RecurrenceInfo = new RecurrenceInfo() {
                 AllDay = true,
                 Start = newStart,
                 Type = RecurrenceType.Yearly,
@@ -465,11 +428,9 @@ namespace WpfSchedulerTimelineScalesTemplate
             return new[] { appt };
         }
 
-        static IEnumerable<TeamAppointment> CreateTrainingAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateTrainingAppts(DateTime start) {
             DateTime newStart = start.AddYears(-1).AddHours(8.5);
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Pattern,
                 AllDay = false,
                 Start = newStart,
@@ -479,8 +440,7 @@ namespace WpfSchedulerTimelineScalesTemplate
                 Label = 3,
                 CalendarId = 0,
             };
-            appt.RecurrenceInfo = new RecurrenceInfo()
-            {
+            appt.RecurrenceInfo = new RecurrenceInfo() {
                 AllDay = false,
                 Start = newStart,
                 Type = RecurrenceType.Weekly,
@@ -490,11 +450,9 @@ namespace WpfSchedulerTimelineScalesTemplate
             return new[] { appt };
         }
 
-        static IEnumerable<TeamAppointment> CreatePayBillsAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreatePayBillsAppts(DateTime start) {
             DateTime newStart = start.AddDays(2).AddYears(-1);
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Pattern,
                 AllDay = true,
                 Start = newStart,
@@ -504,8 +462,7 @@ namespace WpfSchedulerTimelineScalesTemplate
                 Label = 3,
                 CalendarId = 0,
             };
-            appt.RecurrenceInfo = new RecurrenceInfo()
-            {
+            appt.RecurrenceInfo = new RecurrenceInfo() {
                 AllDay = true,
                 Start = newStart,
                 Type = RecurrenceType.Monthly,
@@ -516,23 +473,19 @@ namespace WpfSchedulerTimelineScalesTemplate
             return new[] { appt };
         }
 
-        static IEnumerable<TeamAppointment> CreateDentistAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateDentistAppts(DateTime start) {
             List<TeamAppointment> res = new List<TeamAppointment>() {
                 CreateDentistAppt(start.AddDays(4).AddHours(17.5)),
             };
             DateTime newStart = start.AddYears(-2);
-            while (newStart < start)
-            {
+            while (newStart < start) {
                 newStart = newStart.AddDays(Random.Next(365 / 3, 365 / 2));
                 CreateDentistAppt(newStart);
             }
             return res;
         }
-        static TeamAppointment CreateDentistAppt(DateTime start)
-        {
-            var appt = new TeamAppointment()
-            {
+        static TeamAppointment CreateDentistAppt(DateTime start) {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Normal,
                 AllDay = false,
                 Start = start,
@@ -545,29 +498,25 @@ namespace WpfSchedulerTimelineScalesTemplate
             return appt;
         }
 
-        static IEnumerable<TeamAppointment> CreateRestaurantAppts(DateTime start)
-        {
+        static IEnumerable<TeamAppointment> CreateRestaurantAppts(DateTime start) {
             List<TeamAppointment> res = new List<TeamAppointment>() {
                 CreateDinnerAppt(start.AddDays(2).AddHours(19)),
                 CreateDinnerAppt(start.AddDays(14).AddHours(19)),
                 CreateDinnerAppt(start.AddDays(18).AddHours(21)),
             };
             DateTime newStart = start.AddYears(-2);
-            while (newStart < start)
-            {
+            while (newStart < start) {
                 newStart = newStart.AddDays(Random.Next(14, 42));
                 res.Add(CreateDinnerAppt(newStart.AddHours(Random.Next(18, 22))));
             }
             return res;
         }
-        static TeamAppointment CreateDinnerAppt(DateTime start, TimeSpan? duration = null)
-        {
+        static TeamAppointment CreateDinnerAppt(DateTime start, TimeSpan? duration = null) {
             DateTime newStart = start.AddMinutes(Random.Next(0, 4) * 15);
             DateTime newEnd = duration != null
                 ? newStart.Add(duration.Value)
                 : newStart.AddMinutes(Random.Next(4, 8) * 20);
-            var appt = new TeamAppointment()
-            {
+            var appt = new TeamAppointment() {
                 AppointmentType = (int)AppointmentType.Normal,
                 AllDay = false,
                 Start = newStart,
