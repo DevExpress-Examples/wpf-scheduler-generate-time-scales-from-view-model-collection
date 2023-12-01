@@ -4,28 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfSchedulerTimelineScalesTemplate"
-        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-        xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling" x:Class="WpfSchedulerTimelineScalesTemplate.MainWindow"
+        xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling"
+        x:Class="WpfSchedulerTimelineScalesTemplate.MainWindow"
         mc:Ignorable="d"
-        Title="Timeline View" Height="480" Width="640"
-        DataContext="{dxmvvm:ViewModelSource local:MainViewModel}">
+        Title="Timeline View" Height="480" Width="640">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <local:TimeScaleTemplateSelector x:Key="TimeScaleTemplateSelector">
-            <local:TimeScaleTemplateSelector.WorkDayScaleTemplate>
+            <local:TimeScaleTemplateSelector.DayScaleTemplate>
                 <DataTemplate>
                     <ContentControl>
-                        <dxsch:TimeScaleWorkDay Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}"/>
+                        <dxsch:TimeScaleDay Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}"/>
                     </ContentControl>
                 </DataTemplate>
-            </local:TimeScaleTemplateSelector.WorkDayScaleTemplate>
-            <local:TimeScaleTemplateSelector.WorkHourScaleTemplate>
+            </local:TimeScaleTemplateSelector.DayScaleTemplate>
+            <local:TimeScaleTemplateSelector.HourScaleTemplate>
                 <DataTemplate>
                     <ContentControl>
-                        <dxsch:TimeScaleWorkHour Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}"/>
+                        <dxsch:TimeScaleHour Caption="{Binding Caption}" ShowHeaders="{Binding ShowHeaders}" IsEnabled="{Binding IsEnabled}"/>
                     </ContentControl>
                 </DataTemplate>
-            </local:TimeScaleTemplateSelector.WorkHourScaleTemplate>
+            </local:TimeScaleTemplateSelector.HourScaleTemplate>
             <local:TimeScaleTemplateSelector.FixedTimeScaleTemplate>
                 <DataTemplate>
                     <ContentControl>
