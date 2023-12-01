@@ -3,18 +3,27 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T591091)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
-<!-- default file list -->
-*Files to look at*:
 
+# WPF Scheduler - Generate Time Scales From a View Model Collection
+
+This example generates [Time Scales](https://docs.devexpress.com/WPF/119586/controls-and-libraries/scheduler/views/timeline-view#time-scales) from a collection. The [TimelineView.TimeScalesSource](https://docs.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScalesSource) property specifies the collection of objects that describe time scale elements. The [TimelineView.TimeScaleTemplate](https://docs.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScaleTemplate) property allows you to define a data template used to generate time scales. The example uses the [TimelineView.TimeScaleTemplateSelector](https://docs.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScaleTemplateSelector) property to choose a template based on the time scale type and generates the following time scales: **Day**, **Hour**, and **Half Hour**.
+
+The [TimelineView.TimeScales](https://docs.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScales) collection stores all time scales. You can also use collection members to add, modify, or remove time scales.
+
+![image](https://github.com/DevExpress-Examples/how-to-customize-time-scales-in-the-timeline-view-t591091/assets/65009440/1b5911f5-91e8-43ba-9d94-323211a84368)
+
+## Files to Review
+
+* [MainWindow.xaml](./CS/WpfSchedulerTimelineScalesTemplate/MainWindow.xaml)
 * [MainViewModel.cs](./CS/WpfSchedulerTimelineScalesTemplate/MainViewModel.cs) (VB: [MainViewModel.vb](./VB/WpfSchedulerTimelineScalesTemplate/MainViewModel.vb))
-* **[MainWindow.xaml](./CS/WpfSchedulerTimelineScalesTemplate/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/WpfSchedulerTimelineScalesTemplate/MainWindow.xaml))**
 * [TimeScaleTemplateSelector.cs](./CS/WpfSchedulerTimelineScalesTemplate/TimeScaleTemplateSelector.cs) (VB: [TimeScaleTemplateSelector.vb](./VB/WpfSchedulerTimelineScalesTemplate/TimeScaleTemplateSelector.vb))
-<!-- default file list end -->
-# How to customize time scales in the Timeline view
 
+## Documentation
 
-This example demonstrates how to specify time scales for the <a href="https://documentation.devexpress.com/WPF/119586/Controls-and-Libraries/Scheduler/Views/Timeline-View">Timeline View</a> using the MVVM architectural pattern. <br>The <a href="https://documentation.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScalesSource.property">TimelineView.TimeScalesSource</a> property allows you to bind the Timeline View to a collection of objects containing time scale settings described in the ViewModel. The Timeline View generates time scales based on templates. A template that describes time scales should be assigned to the view's <a href="https://documentation.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScaleTemplate.property">TimelineView.TimeScaleTemplate</a> property. This example uses the <a href="https://documentation.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScaleTemplateSelector.property">TimelineView.TimeScaleTemplateSelector</a> property to choose the required template based on the time scale type. Three time scales are generated: Work Day, Work Hour and Half Hour.<br>The <a href="https://documentation.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScales.property">TimelineView.TimeScales</a> collection stores all time scales of the current Timeline View. You can also use the collection's members to add, modify or remove time scales. <br><img src="https://raw.githubusercontent.com/DevExpress-Examples/how-to-customize-time-scales-in-the-timeline-view-t591091/17.2.3+/media/3811d890-161a-4fe0-bbc6-7823437741b4.png">
+* [Timeline View](https://docs.devexpress.com/WPF/119586/controls-and-libraries/scheduler/views/timeline-view)
+* [TimelineView.TimeScalesSource](https://docs.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScalesSource)
+* [TimelineView.TimeScaleTemplate](https://docs.devexpress.com/WPF/DevExpress.Xpf.Scheduling.TimelineView.TimeScaleTemplate)
 
-<br/>
+## More Examples
 
-
+* [WPF Scheduler - Generate Time Rulers From a View Model Collection](https://github.com/DevExpress-Examples/wpf-scheduler-generate-time-rulers-from-view-model-collection)
